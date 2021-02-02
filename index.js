@@ -20,8 +20,23 @@ client.connect(err => {
   
  app.post('/addBooking', (req,res) => {
      const newBooking = req.body;
-     console.log(newBooking)
- })
+    //  console.log(newBooking)
+     collection.insertOne(newBooking)
+     .then((result) =>{
+       res.send(result.insertedCount > 0)
+            // console.log(res)
+     })
+     })
+     
+app.get('/bookings', (req,res) => {
+  // console.log(req.query.email)
+  collection.find({email: req.query.email})
+  .toArray((err, documents) =>{
+res.send(documents)
+  })
+})
+
+
 });
 
 
